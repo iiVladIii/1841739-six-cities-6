@@ -20,6 +20,7 @@ module.exports = {
     plugins: ['react-refresh'],
     rules: {
         'react-refresh/only-export-components': 'warn',
+        'react/display-name': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
     },
     overrides: [
