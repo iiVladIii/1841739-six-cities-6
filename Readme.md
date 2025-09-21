@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Vladislav Filimonov](https://up.htmlacademy.ru/univer-js3/6/user/1841739).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Осипук](https://htmlacademy.ru/profile/id616431).
 
 ---
 
