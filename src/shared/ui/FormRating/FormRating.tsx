@@ -27,7 +27,7 @@ export const FormRating = memo((props: Props) => {
     return (
         <div className={cn('form__rating', className)}>
             {stars.map(([title, value], _i) => (
-                <>
+                <React.Fragment key={value}>
                     <input
                         onChange={ratingHandler}
                         className="form__rating-input visually-hidden"
@@ -49,7 +49,7 @@ export const FormRating = memo((props: Props) => {
                             <use xlinkHref="#icon-star"></use>
                         </svg>
                     </label>
-                </>
+                </React.Fragment>
             ))}
         </div>
     );
