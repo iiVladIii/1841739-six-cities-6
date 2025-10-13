@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import leaflet from 'leaflet';
 import { Location } from '@/entities/Location';
 
@@ -9,14 +9,23 @@ export function useMap(
     const [map, setMap] = useState<leaflet.Map | null>(null);
     const isRenderedRef = useRef(false);
 
+    const memoizedLocation = useMemo(
+        () => ({
+            latitude: location.latitude,
+            longitude: location.longitude,
+            zoom: location.zoom,
+        }),
+        [location.latitude, location.longitude, location.zoom],
+    );
+
     useEffect(() => {
         if (mapRef.current !== null && !isRenderedRef.current) {
             const instance = leaflet.map(mapRef.current, {
                 center: {
-                    lat: location.latitude,
-                    lng: location.longitude,
+                    lat: memoizedLocation.latitude,
+                    lng: memoizedLocation.longitude,
                 },
-                zoom: location.zoom,
+                zoom: memoizedLocation.zoom,
             });
 
             leaflet
@@ -32,13 +41,16 @@ export function useMap(
             setMap(instance);
             isRenderedRef.current = true;
         }
-    }, [mapRef, location]);
+    }, [mapRef, memoizedLocation]);
 
     useEffect(() => {
         if (map && isRenderedRef.current) {
-            map.setView([location.latitude, location.longitude], location.zoom);
+            map.setView(
+                [memoizedLocation.latitude, memoizedLocation.longitude],
+                memoizedLocation.zoom,
+            );
         }
-    }, [map, location]);
+    }, [map, memoizedLocation]);
 
     return map;
 }
