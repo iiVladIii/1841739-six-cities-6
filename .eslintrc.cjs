@@ -22,6 +22,7 @@ module.exports = {
         'react-refresh/only-export-components': 'warn',
         'react/display-name': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
+        'react/no-array-index-key': 'warn',
     },
     overrides: [
         {
