@@ -1,9 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
 import { Place, PlaceCard, PlaceType } from '@/entities/Place';
-interface LoginPageProps {
-    className?: string;
-}
 
 const placesInitial: Place[] = [
     {
@@ -41,9 +38,7 @@ const placesInitial: Place[] = [
     },
 ];
 
-const OfferPage = memo((props: LoginPageProps) => {
-    const { className: _className } = props;
-
+const OfferPage = memo(() => {
     const [recommendedPlaces, setRecommendedPlaces] = useState<Place[]>([]);
     useEffect(() => {
         setRecommendedPlaces(placesInitial);
