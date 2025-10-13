@@ -1,6 +1,9 @@
 import { memo, useCallback, useMemo } from 'react';
 import { Offer } from '../../model/types/Offer';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { getRouteOfferPage } from '@/shared/consts/router';
+import cn from 'classnames';
 
 interface Props {
     offer: Offer;
@@ -11,14 +14,6 @@ interface Props {
 
 export const OfferCard = memo((props: Props) => {
     const { offer, onFavoriteClick, variant, onActiveOffer } = props;
-
-    const favoriteClasses = useMemo(() => {
-        const classes = ['place-card__bookmark-button', 'button'];
-        if (offer.isFavorite)
-            classes.push('place-card__bookmark-button--active');
-
-        return classes;
-    }, [offer.isFavorite]);
 
     const starsRating = useMemo(() => 20 * offer.rating, [offer.rating]);
 
@@ -68,7 +63,7 @@ export const OfferCard = memo((props: Props) => {
                 </div>
             )}
             <div className={imageWrapperClass}>
-                <a href="#">
+                <Link to={getRouteOfferPage(offer.id)}>
                     <img
                         className="place-card__image"
                         src={offer.previewImage}
@@ -76,7 +71,7 @@ export const OfferCard = memo((props: Props) => {
                         height={imageHeight}
                         alt="Place image"
                     />
-                </a>
+                </Link>
             </div>
             <div className={cardInfoClass}>
                 <div className="place-card__price-wrapper">
@@ -90,7 +85,10 @@ export const OfferCard = memo((props: Props) => {
                     </div>
                     <button
                         onClick={favoriteClickHandler}
-                        className={favoriteClasses.join(' ')}
+                        className={cn('place-card__bookmark-button', 'button', {
+                            'place-card__bookmark-button--active':
+                                offer.isFavorite,
+                        })}
                         type="button"
                     >
                         <svg
@@ -112,7 +110,7 @@ export const OfferCard = memo((props: Props) => {
                     </div>
                 </div>
                 <h2 className="place-card__name">
-                    <a href="#">{offer.title}</a>
+                    <Link to={getRouteOfferPage(offer.id)}>{offer.title}</Link>
                 </h2>
                 <p className="place-card__type">{offer.type}</p>
             </div>

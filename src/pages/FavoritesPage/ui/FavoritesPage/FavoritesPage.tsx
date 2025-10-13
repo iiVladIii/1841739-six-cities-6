@@ -3,6 +3,8 @@ import { Header } from '@/widgets/Header';
 import { Footer } from '@/widgets/Footer';
 import { Offer, OfferCards } from '@/entities/Offer';
 import { generateMockOffers } from '@/shared/mocks/offers.ts';
+import { Link } from 'react-router-dom';
+import { getRouteMainPage } from '@/shared/consts/router.ts';
 
 const FavoritesPage = memo(() => {
     const [placesByCities, setPlacesByCities] = useState<
@@ -69,12 +71,12 @@ const FavoritesPage = memo(() => {
                                         >
                                             <div className="favorites__locations locations locations--current">
                                                 <div className="locations__item">
-                                                    <a
+                                                    <Link
                                                         className="locations__item-link"
-                                                        href="#"
+                                                        to={`${getRouteMainPage()}?city=${city}`}
                                                     >
                                                         <span>{city}</span>
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                             <div className="favorites__places">
