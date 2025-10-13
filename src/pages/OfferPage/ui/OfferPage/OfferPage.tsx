@@ -1,47 +1,12 @@
 import { memo, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
-import { Place, PlaceCard, PlaceType } from '@/entities/Place';
-
-const placesInitial: Place[] = [
-    {
-        id: 1,
-        title: 'Beautiful & luxurious apartment at great location',
-        type: PlaceType.APARTMENT,
-        price: 120,
-        rating: 4.0,
-        isPremium: true,
-        isFavorite: false,
-        previewImage: 'img/apartment-01.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 2,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 3,
-        title: 'Canal View Prinsengracht',
-        type: PlaceType.APARTMENT,
-        price: 132,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: false,
-        previewImage: 'img/apartment-02.jpg',
-        city: 'Amsterdam',
-    },
-];
+import { generateMockOffers } from '@/shared/mocks/offers.ts';
+import { Offer, OfferCards } from '@/entities/Offer';
 
 const OfferPage = memo(() => {
-    const [recommendedPlaces, setRecommendedPlaces] = useState<Place[]>([]);
+    const [recommendedPlaces, setRecommendedPlaces] = useState<Offer[]>([]);
     useEffect(() => {
-        setRecommendedPlaces(placesInitial);
+        setRecommendedPlaces(generateMockOffers());
     }, []);
     const isAuth = true;
 
@@ -432,9 +397,7 @@ const OfferPage = memo(() => {
                             Other places in the neighbourhood
                         </h2>
                         <div className="near-places__list places__list">
-                            {recommendedPlaces.map((p) => (
-                                <PlaceCard place={p} key={p.id} />
-                            ))}
+                            <OfferCards offers={recommendedPlaces} />
                         </div>
                     </section>
                 </div>

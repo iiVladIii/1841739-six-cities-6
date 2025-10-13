@@ -1,32 +1,32 @@
 import { memo, useCallback, useMemo } from 'react';
-import { Place } from '../../model/types/Place';
+import { Offer } from '../../model/types/Offer';
 import * as React from 'react';
 
-interface PlaceCardProps {
-    className?: string;
-    place: Place;
-    onFavoriteClick?: (id: number) => void;
+interface Props {
+    offer: Offer;
+    onFavoriteClick?: (id: string) => void;
     variant?: 'default' | 'favorite';
+    onActiveOffer?: (_o: Offer | null) => void;
 }
 
-export const PlaceCard = memo((props: PlaceCardProps) => {
-    const { className: _cn, place, onFavoriteClick, variant } = props;
+export const OfferCard = memo((props: Props) => {
+    const { offer, onFavoriteClick, variant, onActiveOffer } = props;
 
     const favoriteClasses = useMemo(() => {
         const classes = ['place-card__bookmark-button', 'button'];
-        if (place.isFavorite)
+        if (offer.isFavorite)
             classes.push('place-card__bookmark-button--active');
 
         return classes;
-    }, [place.isFavorite]);
+    }, [offer.isFavorite]);
 
-    const starsRating = useMemo(() => 20 * place.rating, [place.rating]);
+    const starsRating = useMemo(() => 20 * offer.rating, [offer.rating]);
 
     const favoriteClickHandler = useCallback(
         (e: React.MouseEvent<HTMLButtonElement>) => {
-            onFavoriteClick?.(place.id);
+            onFavoriteClick?.(offer.id);
         },
-        [onFavoriteClick, place.id],
+        [onFavoriteClick, offer.id],
     );
 
     const isFavoriteVariant = variant === 'favorite';
@@ -39,15 +39,30 @@ export const PlaceCard = memo((props: PlaceCardProps) => {
     const imageWidth = isFavoriteVariant ? 150 : 260;
     const imageHeight = isFavoriteVariant ? 110 : 200;
 
+    const mouseEnter = useCallback(
+        (e: React.MouseEvent<HTMLElement>) => {
+            onActiveOffer?.(offer);
+        },
+        [offer, onActiveOffer],
+    );
+    const mouseLeave = useCallback(
+        (e: React.MouseEvent<HTMLElement>) => {
+            onActiveOffer?.(null);
+        },
+        [onActiveOffer],
+    );
+
     return (
         <article
+            onMouseEnter={mouseEnter}
+            onMouseLeave={mouseLeave}
             className={
                 isFavoriteVariant
                     ? 'favorites__card place-card'
                     : 'cities__card place-card'
             }
         >
-            {place.isPremium && (
+            {offer.isPremium && (
                 <div className="place-card__mark">
                     <span>Premium</span>
                 </div>
@@ -56,7 +71,7 @@ export const PlaceCard = memo((props: PlaceCardProps) => {
                 <a href="#">
                     <img
                         className="place-card__image"
-                        src={place.previewImage}
+                        src={offer.previewImage}
                         width={imageWidth}
                         height={imageHeight}
                         alt="Place image"
@@ -67,7 +82,7 @@ export const PlaceCard = memo((props: PlaceCardProps) => {
                 <div className="place-card__price-wrapper">
                     <div className="place-card__price">
                         <b className="place-card__price-value">
-                            &euro;{place.price}
+                            &euro;{offer.price}
                         </b>
                         <span className="place-card__price-text">
                             &#47;&nbsp;night
@@ -86,7 +101,7 @@ export const PlaceCard = memo((props: PlaceCardProps) => {
                             <use xlinkHref="#icon-bookmark"></use>
                         </svg>
                         <span className="visually-hidden">
-                            {place.isFavorite ? 'In bookmarks' : 'To bookmarks'}
+                            {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
                         </span>
                     </button>
                 </div>
@@ -97,9 +112,9 @@ export const PlaceCard = memo((props: PlaceCardProps) => {
                     </div>
                 </div>
                 <h2 className="place-card__name">
-                    <a href="#">{place.title}</a>
+                    <a href="#">{offer.title}</a>
                 </h2>
-                <p className="place-card__type">{place.type}</p>
+                <p className="place-card__type">{offer.type}</p>
             </div>
         </article>
     );

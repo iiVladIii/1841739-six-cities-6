@@ -16,3 +16,5 @@ export const useUserAuthData = (isAuth?: boolean) => {
     };
     return isAuth ? user : undefined;
 };
+
+export type { UserAuthData, User } from './model/types/User';

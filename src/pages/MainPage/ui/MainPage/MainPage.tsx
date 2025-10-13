@@ -1,65 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
-import { Place, PlaceCard } from '@/entities/Place';
-import { PlaceType } from '@/entities/Place/model/consts/PlaceType.ts';
-
-const placesInitial: Place[] = [
-    {
-        id: 1,
-        title: 'Beautiful & luxurious apartment at great location',
-        type: PlaceType.APARTMENT,
-        price: 120,
-        rating: 4.0,
-        isPremium: true,
-        isFavorite: false,
-        previewImage: 'img/apartment-01.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 2,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 3,
-        title: 'Canal View Prinsengracht',
-        type: PlaceType.APARTMENT,
-        price: 132,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: false,
-        previewImage: 'img/apartment-02.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 4,
-        title: 'Nice, cozy, warm big bed apartment',
-        type: PlaceType.APARTMENT,
-        price: 180,
-        rating: 5.0,
-        isPremium: true,
-        isFavorite: false,
-        previewImage: 'img/apartment-03.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 5,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Amsterdam',
-    },
-];
+import { Offer, OfferCards } from '@/entities/Offer';
+import { generateMockOffers } from '@/shared/mocks/offers.ts';
 
 const Tabs = () => (
     <div className="tabs">
@@ -101,17 +43,17 @@ const Tabs = () => (
 );
 
 const MainPage = memo(() => {
-    const [places, setPlaces] = useState<Place[]>([]);
+    const [offers, setOffers] = useState<Offer[]>([]);
 
     useEffect(() => {
-        setPlaces(placesInitial);
+        setOffers(generateMockOffers());
     }, []);
 
     return (
         <div className="page page--gray page--main">
             <Header />
 
-            {places?.length === 0 ? (
+            {offers?.length === 0 ? (
                 <main className="page__main page__main--index page__main--index-empty">
                     <h1 className="visually-hidden">Cities</h1>
                     <div className="tabs">
@@ -242,12 +184,7 @@ const MainPage = memo(() => {
                                     </ul>
                                 </form>
                                 <div className="cities__places-list places__list tabs__content">
-                                    {places.map((place) => (
-                                        <PlaceCard
-                                            key={place.id}
-                                            place={place}
-                                        />
-                                    ))}
+                                    <OfferCards offers={offers} />
                                 </div>
                             </section>
                             <div className="cities__right-section">
