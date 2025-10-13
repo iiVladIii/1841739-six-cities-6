@@ -1,1 +1,1 @@
-export type { Location, City } from './model/Types/City';
+export type { City } from './model/Types/City';
