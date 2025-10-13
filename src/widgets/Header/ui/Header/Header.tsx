@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useUserAuthData } from '@/entities/User';
 
 interface HeaderProps {
     className?: string;
@@ -7,7 +8,7 @@ interface HeaderProps {
 export const Header = memo((props: HeaderProps) => {
     const { className: _className } = props;
 
-    const isAuth = true;
+    const authData = useUserAuthData(true);
 
     return (
         <header className="header">
@@ -24,7 +25,7 @@ export const Header = memo((props: HeaderProps) => {
                             />
                         </a>
                     </div>
-                    {isAuth && (
+                    {authData && (
                         <nav className="header__nav">
                             <ul className="header__nav-list">
                                 <li className="header__nav-item user">
