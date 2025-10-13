@@ -1,27 +1,15 @@
-import { memo, useEffect, useMemo } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { getRouteMainPage } from '@/shared/consts/router';
 import cn from 'classnames';
+import { Cities } from '@/entities/City';
 
-export const CityTabs = memo(() => {
-    const cities: string[] = [
-        'Paris',
-        'Cologne',
-        'Brussels',
-        'Amsterdam',
-        'Hamburg',
-        'Dusseldorf',
-    ];
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-
-    const activeTab = useMemo(() => searchParams.get('city'), [searchParams]);
-
-    useEffect(() => {
-        if (!activeTab) {
-            navigate(`${getRouteMainPage()}?city=${cities[3]}`);
-        }
-    }, [activeTab, cities, navigate]);
+interface Props {
+    city: string | null;
+}
+export const CityTabs = memo((props: Props) => {
+    const { city } = props;
+    const cities = Object.values(Cities);
 
     return (
         <div className="tabs">
@@ -33,7 +21,7 @@ export const CityTabs = memo(() => {
                                 className={cn(
                                     'locations__item-link',
                                     'tabs__item',
-                                    { 'tabs__item--active': activeTab },
+                                    { 'tabs__item--active': city === _c },
                                 )}
                                 to={`${getRouteMainPage()}?city=${_c}`}
                             >

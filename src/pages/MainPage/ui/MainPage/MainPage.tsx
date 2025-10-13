@@ -1,11 +1,33 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Header } from '@/widgets/Header';
 import { Offer, OfferCards } from '@/entities/Offer';
 import { generateMockOffers } from '@/shared/mocks/offers.ts';
 import { CityTabs } from '@/features/CityTabs';
+import { CityMap } from '@/widgets/CityMap';
+import { getRouteMainPage } from '@/shared/consts/router';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Cities } from '@/entities/City';
 
 const MainPage = memo(() => {
     const [offers, setOffers] = useState<Offer[]>([]);
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+
+    const selectOffer = useCallback((offer: Offer | null) => {
+        setSelectedOffer(offer);
+    }, []);
+
+    const selectedCity = useMemo(
+        () => searchParams.get('city'),
+        [searchParams],
+    );
+
+    useEffect(() => {
+        if (!selectedCity) {
+            navigate(`${getRouteMainPage()}?city=${Cities.Amsterdam}`);
+        }
+    }, [navigate, selectedCity]);
 
     useEffect(() => {
         setOffers(generateMockOffers());
@@ -18,7 +40,7 @@ const MainPage = memo(() => {
             {offers?.length === 0 ? (
                 <main className="page__main page__main--index page__main--index-empty">
                     <h1 className="visually-hidden">Cities</h1>
-                    <CityTabs />
+                    <CityTabs city={selectedCity} />
                     <div className="cities">
                         <div className="cities__places-container cities__places-container--empty container">
                             <section className="cities__no-places">
@@ -39,7 +61,7 @@ const MainPage = memo(() => {
             ) : (
                 <main className="page__main page__main--index">
                     <h1 className="visually-hidden">Cities</h1>
-                    <CityTabs />
+                    <CityTabs city={selectedCity} />
                     <div className="cities">
                         <div className="cities__places-container container">
                             <section className="cities__places places">
@@ -96,11 +118,18 @@ const MainPage = memo(() => {
                                     </ul>
                                 </form>
                                 <div className="cities__places-list places__list tabs__content">
-                                    <OfferCards offers={offers} />
+                                    <OfferCards
+                                        offers={offers}
+                                        onActiveOffer={selectOffer}
+                                    />
                                 </div>
                             </section>
                             <div className="cities__right-section">
-                                <section className="cities__map map"></section>
+                                <CityMap
+                                    city={selectedCity}
+                                    offers={offers}
+                                    selectedOffer={selectedOffer}
+                                />
                             </div>
                         </div>
                     </div>
