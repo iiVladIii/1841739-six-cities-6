@@ -16,7 +16,7 @@ export const generateMockReviews = () => [
         date: '2020-03-15T10:25:33.741Z',
         user: {
             name: 'Sarah Johnson',
-            avatarUrl: 'https://url-to-image/avatar2.png',
+            avatarUrl: 'img/avatar-max.jpg',
             isPro: true,
         },
         comment:
@@ -28,7 +28,7 @@ export const generateMockReviews = () => [
         date: '2021-07-22T18:42:17.892Z',
         user: {
             name: 'Mike Wilson',
-            avatarUrl: 'https://url-to-image/avatar3.png',
+            avatarUrl: 'img/avatar-max.jpg',
             isPro: false,
         },
         comment:
@@ -40,7 +40,7 @@ export const generateMockReviews = () => [
         date: '2022-11-30T12:18:44.123Z',
         user: {
             name: 'Emma Davis',
-            avatarUrl: 'https://url-to-image/avatar4.png',
+            avatarUrl: 'img/avatar-max.jpg',
             isPro: true,
         },
         comment:
@@ -52,7 +52,7 @@ export const generateMockReviews = () => [
         date: '2023-01-12T09:55:28.456Z',
         user: {
             name: 'James Brown',
-            avatarUrl: 'https://url-to-image/avatar5.png',
+            avatarUrl: 'img/avatar-max.jpg',
             isPro: false,
         },
         comment:
