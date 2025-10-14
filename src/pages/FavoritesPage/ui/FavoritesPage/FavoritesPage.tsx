@@ -3,10 +3,6 @@ import { Header } from '@/widgets/Header';
 import { Place, PlaceCard, PlaceType } from '@/entities/Place';
 import { Footer } from '@/widgets/Footer';
 
-interface MainPageProps {
-    className?: string;
-}
-
 const placesInitial: Place[] = [
     {
         id: 2,
@@ -32,9 +28,7 @@ const placesInitial: Place[] = [
     },
 ];
 
-const FavoritesPage = memo((props: MainPageProps) => {
-    const { className: _className } = props;
-
+const FavoritesPage = memo(() => {
     const [placesByCities, setPlacesByCities] = useState<
         Record<string, Place[]>
     >({});

@@ -3,10 +3,6 @@ import { Header } from '@/widgets/Header';
 import { Place, PlaceCard } from '@/entities/Place';
 import { PlaceType } from '@/entities/Place/model/consts/PlaceType.ts';
 
-interface MainPageProps {
-    className?: string;
-}
-
 const placesInitial: Place[] = [
     {
         id: 1,
@@ -104,9 +100,7 @@ const Tabs = () => (
     </div>
 );
 
-const MainPage = memo((props: MainPageProps) => {
-    const { className: _className } = props;
-
+const MainPage = memo(() => {
     const [places, setPlaces] = useState<Place[]>([]);
 
     useEffect(() => {
