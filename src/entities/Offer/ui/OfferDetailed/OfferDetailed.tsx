@@ -130,7 +130,6 @@ export const OfferDetailed = memo((props: OfferDetailedProps) => {
                     {reviews}
                 </div>
             </div>
-            <section className="offer__map map"></section>
         </section>
     );
 });
