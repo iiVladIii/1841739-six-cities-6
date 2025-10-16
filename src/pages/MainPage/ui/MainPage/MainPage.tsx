@@ -1,170 +1,24 @@
 import { memo, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
-import { Place, PlaceCard } from '@/entities/Place';
-import { PlaceType } from '@/entities/Place/model/consts/PlaceType.ts';
-
-const placesInitial: Place[] = [
-    {
-        id: 1,
-        title: 'Beautiful & luxurious apartment at great location',
-        type: PlaceType.APARTMENT,
-        price: 120,
-        rating: 4.0,
-        isPremium: true,
-        isFavorite: false,
-        previewImage: 'img/apartment-01.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 2,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 3,
-        title: 'Canal View Prinsengracht',
-        type: PlaceType.APARTMENT,
-        price: 132,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: false,
-        previewImage: 'img/apartment-02.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 4,
-        title: 'Nice, cozy, warm big bed apartment',
-        type: PlaceType.APARTMENT,
-        price: 180,
-        rating: 5.0,
-        isPremium: true,
-        isFavorite: false,
-        previewImage: 'img/apartment-03.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 5,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Amsterdam',
-    },
-];
-
-const Tabs = () => (
-    <div className="tabs">
-        <section className="locations container">
-            <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                    <a className="locations__item-link tabs__item" href="#">
-                        <span>Paris</span>
-                    </a>
-                </li>
-                <li className="locations__item">
-                    <a className="locations__item-link tabs__item" href="#">
-                        <span>Cologne</span>
-                    </a>
-                </li>
-                <li className="locations__item">
-                    <a className="locations__item-link tabs__item" href="#">
-                        <span>Brussels</span>
-                    </a>
-                </li>
-                <li className="locations__item">
-                    <a className="locations__item-link tabs__item tabs__item--active">
-                        <span>Amsterdam</span>
-                    </a>
-                </li>
-                <li className="locations__item">
-                    <a className="locations__item-link tabs__item" href="#">
-                        <span>Hamburg</span>
-                    </a>
-                </li>
-                <li className="locations__item">
-                    <a className="locations__item-link tabs__item" href="#">
-                        <span>Dusseldorf</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </div>
-);
+import { Offer, OfferCards } from '@/entities/Offer';
+import { generateMockOffers } from '@/shared/mocks/offers.ts';
+import { CityTabs } from '@/features/CityTabs';
 
 const MainPage = memo(() => {
-    const [places, setPlaces] = useState<Place[]>([]);
+    const [offers, setOffers] = useState<Offer[]>([]);
 
     useEffect(() => {
-        setPlaces(placesInitial);
+        setOffers(generateMockOffers());
     }, []);
 
     return (
         <div className="page page--gray page--main">
             <Header />
 
-            {places?.length === 0 ? (
+            {offers?.length === 0 ? (
                 <main className="page__main page__main--index page__main--index-empty">
                     <h1 className="visually-hidden">Cities</h1>
-                    <div className="tabs">
-                        <section className="locations container">
-                            <ul className="locations__list tabs__list">
-                                <li className="locations__item">
-                                    <a
-                                        className="locations__item-link tabs__item"
-                                        href="#"
-                                    >
-                                        <span>Paris</span>
-                                    </a>
-                                </li>
-                                <li className="locations__item">
-                                    <a
-                                        className="locations__item-link tabs__item"
-                                        href="#"
-                                    >
-                                        <span>Cologne</span>
-                                    </a>
-                                </li>
-                                <li className="locations__item">
-                                    <a
-                                        className="locations__item-link tabs__item"
-                                        href="#"
-                                    >
-                                        <span>Brussels</span>
-                                    </a>
-                                </li>
-                                <li className="locations__item">
-                                    <a className="locations__item-link tabs__item">
-                                        <span>Amsterdam</span>
-                                    </a>
-                                </li>
-                                <li className="locations__item">
-                                    <a
-                                        className="locations__item-link tabs__item"
-                                        href="#"
-                                    >
-                                        <span>Hamburg</span>
-                                    </a>
-                                </li>
-                                <li className="locations__item">
-                                    <a
-                                        className="locations__item-link tabs__item tabs__item--active"
-                                        href="#"
-                                    >
-                                        <span>Dusseldorf</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </section>
-                    </div>
+                    <CityTabs />
                     <div className="cities">
                         <div className="cities__places-container cities__places-container--empty container">
                             <section className="cities__no-places">
@@ -185,7 +39,7 @@ const MainPage = memo(() => {
             ) : (
                 <main className="page__main page__main--index">
                     <h1 className="visually-hidden">Cities</h1>
-                    <Tabs />
+                    <CityTabs />
                     <div className="cities">
                         <div className="cities__places-container container">
                             <section className="cities__places places">
@@ -242,12 +96,7 @@ const MainPage = memo(() => {
                                     </ul>
                                 </form>
                                 <div className="cities__places-list places__list tabs__content">
-                                    {places.map((place) => (
-                                        <PlaceCard
-                                            key={place.id}
-                                            place={place}
-                                        />
-                                    ))}
+                                    <OfferCards offers={offers} />
                                 </div>
                             </section>
                             <div className="cities__right-section">

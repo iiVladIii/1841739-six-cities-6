@@ -1,47 +1,28 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { Header } from '@/widgets/Header';
-import { Place, PlaceCard, PlaceType } from '@/entities/Place';
 import { Footer } from '@/widgets/Footer';
-
-const placesInitial: Place[] = [
-    {
-        id: 2,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Amsterdam',
-    },
-    {
-        id: 5,
-        title: 'Wood and stone place',
-        type: PlaceType.ROOM,
-        price: 80,
-        rating: 4.0,
-        isPremium: false,
-        isFavorite: true,
-        previewImage: 'img/room.jpg',
-        city: 'Cologne',
-    },
-];
+import { Offer, OfferCards } from '@/entities/Offer';
+import { generateMockOffers } from '@/shared/mocks/offers.ts';
+import { Link } from 'react-router-dom';
+import { getRouteMainPage } from '@/shared/consts/router.ts';
 
 const FavoritesPage = memo(() => {
     const [placesByCities, setPlacesByCities] = useState<
-        Record<string, Place[]>
+        Record<string, Offer[]>
     >({});
     useEffect(() => {
         setPlacesByCities(
-            placesInitial.reduce((acc: Record<string, Place[]>, curr) => {
-                if (!(curr.city in acc)) {
-                    acc[curr.city] = [];
-                }
-                acc[curr.city].push(curr);
+            generateMockOffers().reduce(
+                (acc: Record<string, Offer[]>, curr) => {
+                    if (!(curr.city.name in acc)) {
+                        acc[curr.city.name] = [];
+                    }
+                    acc[curr.city.name].push(curr);
 
-                return acc;
-            }, {}),
+                    return acc;
+                },
+                {},
+            ),
         );
     }, []);
 
@@ -90,22 +71,19 @@ const FavoritesPage = memo(() => {
                                         >
                                             <div className="favorites__locations locations locations--current">
                                                 <div className="locations__item">
-                                                    <a
+                                                    <Link
                                                         className="locations__item-link"
-                                                        href="#"
+                                                        to={`${getRouteMainPage()}?city=${city}`}
                                                     >
                                                         <span>{city}</span>
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                             <div className="favorites__places">
-                                                {places.map((p) => (
-                                                    <PlaceCard
-                                                        place={p}
-                                                        key={p.id}
-                                                        variant={'favorite'}
-                                                    />
-                                                ))}
+                                                <OfferCards
+                                                    offers={places}
+                                                    variant={'favorite'}
+                                                />
                                             </div>
                                         </li>
                                     ),
