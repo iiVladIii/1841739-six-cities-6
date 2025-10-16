@@ -1,12 +1,19 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
 import { generateMockOffers } from '@/shared/mocks/offers';
 import { DetailedOffer, Offer, OfferCards } from '@/entities/Offer';
 import { OfferDetailed } from '@/entities/Offer';
 import { OfferReviews } from '@/widgets/OfferReviews';
+import { CityMap } from '@/widgets/CityMap';
 
 const OfferPage = memo(() => {
     const [recommendedPlaces, setRecommendedPlaces] = useState<Offer[]>([]);
+    const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+
+    const selectOffer = useCallback((o: Offer | null) => {
+        setSelectedOffer(o);
+    }, []);
+
     useEffect(() => {
         setRecommendedPlaces(generateMockOffers());
     }, []);
@@ -52,6 +59,13 @@ const OfferPage = memo(() => {
                     offer={offer}
                     reviews={<OfferReviews id={offer.id} />}
                 />
+                <section className="offer__map map">
+                    <CityMap
+                        city={offer.city.name}
+                        offers={recommendedPlaces}
+                        selectedOffer={selectedOffer}
+                    />
+                </section>
 
                 <div className="container">
                     <section className="near-places places">
@@ -59,7 +73,10 @@ const OfferPage = memo(() => {
                             Other places in the neighbourhood
                         </h2>
                         <div className="near-places__list places__list">
-                            <OfferCards offers={recommendedPlaces} />
+                            <OfferCards
+                                offers={recommendedPlaces}
+                                onActiveOffer={selectOffer}
+                            />
                         </div>
                     </section>
                 </div>

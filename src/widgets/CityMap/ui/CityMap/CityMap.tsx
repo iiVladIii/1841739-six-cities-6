@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { Map } from '@/shared/ui';
+import { MapComponent } from '@/shared/ui';
 import { Cities, CITY_LOCATIONS } from '@/entities/City';
 import { Location } from '@/entities/Location';
 import { Offer } from '@/entities/Offer';
@@ -42,5 +42,5 @@ export const CityMap = memo((props: CityMapProps) => {
         return CITY_LOCATIONS[Cities.Amsterdam];
     }, [city]);
 
-    return <Map location={location} points={points} />;
+    return <MapComponent location={location} points={points} />;
 });
