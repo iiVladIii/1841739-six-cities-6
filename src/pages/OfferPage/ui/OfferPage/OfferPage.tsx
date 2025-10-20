@@ -11,7 +11,7 @@ import {
 import { OfferDetailed } from '@/entities/Offer';
 import { OfferReviews } from '@/widgets/OfferReviews';
 import { CityMap } from '@/features/city-map';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { scrollIntoView } from '@/shared/lib/scrollIntoView';
 
@@ -21,6 +21,7 @@ const OfferPage = memo(() => {
     const recommendedPlaces = useNearbyOffers();
     const offer = useOffer();
     const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+    const navigate = useNavigate();
 
     const selectOffer = useCallback((o: Offer | null) => {
         setSelectedOffer(o);
@@ -32,9 +33,13 @@ const OfferPage = memo(() => {
                 top: 0,
                 behavior: 'smooth',
             });
-            dispatch(fetchOffer(id));
+            dispatch(fetchOffer(id)).then((d) => {
+                if (d.meta.requestStatus === 'rejected') {
+                    navigate('/404');
+                }
+            });
         }
-    }, [dispatch, id]);
+    }, [dispatch, id, navigate]);
 
     useEffect(() => {
         if (offer) {
