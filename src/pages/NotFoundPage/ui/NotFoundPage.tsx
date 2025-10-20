@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getRouteMainPage } from '@/shared/consts/router.ts';
+import { getRouteMainPage } from '@/shared/consts/router';
 import cls from './NotFoundPage.module.css';
 
 const NotFoundPage = memo(() => {

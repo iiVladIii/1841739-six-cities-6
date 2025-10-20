@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { OfferSchema } from './types/state';
-import { fetchOffersByCity } from '../api/fetch-offers-by-city.ts';
-import { fetchFavoriteOffers } from '../api/fetch-favorite-offers.ts';
-import { fetchOffer } from '../api/fetch-offer.ts';
-import { fetchNearbyOffersByCity } from '../api/fetch-nearby-offers-by-city.ts';
-import { toggleFavoriteOffer } from '../api/toggle-favorite-offer.ts';
+import { fetchOffersByCity } from '../api/fetch-offers-by-city';
+import { fetchFavoriteOffers } from '../api/fetch-favorite-offers';
+import { fetchOffer } from '../api/fetch-offer';
+import { fetchNearbyOffersByCity } from '../api/fetch-nearby-offers-by-city';
+import { toggleFavoriteOffer } from '../api/toggle-favorite-offer';
 import {
     calculateFavoritesCount,
     toggleFavoriteOffers,

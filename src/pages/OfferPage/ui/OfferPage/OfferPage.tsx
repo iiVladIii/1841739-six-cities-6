@@ -13,7 +13,7 @@ import { OfferReviews } from '@/widgets/OfferReviews';
 import { CityMap } from '@/features/city-map';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import { scrollIntoView } from '@/shared/lib/scrollIntoView.ts';
+import { scrollIntoView } from '@/shared/lib/scrollIntoView';
 
 const OfferPage = memo(() => {
     const { id } = useParams<{ id: string }>();

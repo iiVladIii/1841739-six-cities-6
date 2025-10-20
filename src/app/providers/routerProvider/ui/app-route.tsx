@@ -1,9 +1,9 @@
-import { AppRoutesProps } from '@/shared/types/router.ts';
+import { AppRoutesProps } from '@/shared/types/router';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useUserAuthData } from '@/entities/User';
 import { Suspense } from 'react';
 import { Loader } from '@/shared/ui';
-import { getRouteLoginPage, getRouteMainPage } from '@/shared/consts/router.ts';
+import { getRouteLoginPage, getRouteMainPage } from '@/shared/consts/router';
 
 interface Props {
     route: AppRoutesProps;

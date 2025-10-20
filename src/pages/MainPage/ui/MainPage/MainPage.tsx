@@ -11,7 +11,7 @@ import { CityMap } from '@/features/city-map';
 import { useCityName } from '@/entities/City';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { SortSelector } from '@/features/sort-selector';
-import { scrollIntoView } from '@/shared/lib/scrollIntoView.ts';
+import { scrollIntoView } from '@/shared/lib/scrollIntoView';
 import { useSearchParams } from 'react-router-dom';
 
 const MainPage = memo(() => {

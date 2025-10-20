@@ -1,4 +1,4 @@
-import { DetailedOffer, Offer } from './Offer.ts';
+import { DetailedOffer, Offer } from './Offer';
 import { CITY_NAME } from '@/entities/City';
 
 export interface OfferSchema {

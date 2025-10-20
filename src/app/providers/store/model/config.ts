@@ -4,7 +4,7 @@ import { cityReducer } from '@/entities/City';
 import { offerReducer } from '@/entities/Offer';
 import { $api } from '@/shared/api/api';
 import { userReducer } from '@/entities/User';
-import { apiErrorHandler } from '@/shared/types/api.ts';
+import { apiErrorHandler } from '@/shared/types/api';
 
 const reducers: ReducersMapObject<StateSchema> = {
     city: cityReducer,
