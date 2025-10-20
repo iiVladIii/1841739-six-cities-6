@@ -35,7 +35,7 @@ export const OfferDetailed = memo((props: OfferDetailedProps) => {
                         </div>
                     )}
                     <div className="offer__name-wrapper">
-                        <h1 className="offer__name">${offer.title}</h1>
+                        <h1 className="offer__name">{offer.title}</h1>
                         <button
                             className={cn('offer__bookmark-button button', {
                                 'offer__bookmark-button--active':

@@ -42,7 +42,7 @@ export const ReviewList = memo((props: Props) => {
                                 <span className="visually-hidden">Rating</span>
                             </div>
                         </div>
-                        <p className="reviews__text">${r.comment}</p>
+                        <p className="reviews__text">{r.comment}</p>
                         <time
                             className="reviews__time"
                             dateTime={formatDate(r.date).dateTime}
