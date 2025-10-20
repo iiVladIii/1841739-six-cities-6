@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import { Header } from '@/widgets/Header';
 import { LoginForm } from '@/features/login';
+import { Link } from 'react-router-dom';
+import { getRouteMainPage } from '@/shared/consts/router.ts';
 
 const LoginPage = memo(() => (
     <div className="page page--gray page--login">
@@ -11,9 +13,12 @@ const LoginPage = memo(() => (
                 <LoginForm />
                 <section className="locations locations--login locations--current">
                     <div className="locations__item">
-                        <a className="locations__item-link" href="#">
+                        <Link
+                            className="locations__item-link"
+                            to={`${getRouteMainPage()}?city=Amsterdam`}
+                        >
                             <span>Amsterdam</span>
-                        </a>
+                        </Link>
                     </div>
                 </section>
             </div>
