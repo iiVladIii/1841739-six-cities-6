@@ -4,6 +4,9 @@
 * Наставник: [Андрей Осипук](https://htmlacademy.ru/profile/id616431).
 
 ---
+## Пропуск, уже сделано
+
+---
 
 _Не удаляйте и не изменяйте папки и файлы:_
 _`.editorconfig`, `.gitattributes`, `.gitignore`._
