@@ -7,6 +7,7 @@ import { CityMap } from '@/widgets/CityMap';
 import { getRouteMainPage } from '@/shared/consts/router';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Cities } from '@/entities/City';
+import { SortSelector } from '@/features/sort-selector';
 
 const MainPage = memo(() => {
     const [offers, setOffers] = useState<Offer[]>([]);
