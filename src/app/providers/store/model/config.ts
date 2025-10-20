@@ -4,6 +4,7 @@ import { cityReducer } from '@/entities/City';
 import { offerReducer } from '@/entities/Offer';
 import { $api } from '@/shared/api/api';
 import { userReducer } from '@/entities/User';
+import { apiErrorHandler } from '@/shared/types/api.ts';
 
 const reducers: ReducersMapObject<StateSchema> = {
     city: cityReducer,
@@ -19,6 +20,7 @@ export const reduxStore = configureStore({
             thunk: {
                 extraArgument: {
                     api: $api,
+                    errorHandler: apiErrorHandler,
                 },
             },
         }),
