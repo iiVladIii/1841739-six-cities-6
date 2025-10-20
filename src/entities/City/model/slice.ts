@@ -34,6 +34,9 @@ const citySlice = createSlice({
                 state.name = initialState.name;
             }
         },
+        resetCity: (state) => {
+            state.name = null;
+        },
     },
 });
 

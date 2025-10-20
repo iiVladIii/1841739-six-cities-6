@@ -12,13 +12,11 @@ import { useCityName } from '@/entities/City';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { SortSelector } from '@/features/sort-selector';
 import { scrollIntoView } from '@/shared/lib/scrollIntoView';
-import { useSearchParams } from 'react-router-dom';
 
 const MainPage = memo(() => {
     const offers = useAvailableOffers();
     const dispatch = useAppDispatch();
     const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
-    const [searchParams] = useSearchParams();
 
     const selectOffer = useCallback((offer: Offer | null) => {
         setSelectedOffer(offer);
@@ -28,7 +26,7 @@ const MainPage = memo(() => {
 
     useEffect(() => {
         if (selectedCity) dispatch(fetchOffersByCity(selectedCity));
-    }, [dispatch, selectedCity, searchParams]);
+    }, [dispatch, selectedCity]);
 
     return (
         <div className="page page--gray page--main">
