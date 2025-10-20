@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { MapComponent } from '@/shared/ui';
-import { Cities, CITY_LOCATIONS } from '@/entities/City';
+import { CITY_NAME, CITY_LOCATIONS } from '@/entities/City';
 import { Location } from '@/entities/Location';
 import { Offer } from '@/entities/Offer';
 import { MapPoint } from '@/shared/ui/Map/Map';
@@ -18,8 +18,8 @@ const isLocation = (value: Location | string | null): value is Location =>
     'latitude' in value &&
     'longitude' in value;
 
-const isKnownCity = (value: string | null): value is Cities =>
-    value !== null && Object.values(Cities).includes(value as Cities);
+const isKnownCity = (value: string | null): value is CITY_NAME =>
+    value !== null && Object.values(CITY_NAME).includes(value as CITY_NAME);
 
 export const CityMap = memo((props: CityMapProps) => {
     const { city, offers, selectedOffer } = props;
@@ -39,7 +39,7 @@ export const CityMap = memo((props: CityMapProps) => {
     const location: Location = useMemo(() => {
         if (isLocation(city)) return city;
         if (isKnownCity(city)) return CITY_LOCATIONS[city];
-        return CITY_LOCATIONS[Cities.Amsterdam];
+        return CITY_LOCATIONS[CITY_NAME.Paris];
     }, [city]);
 
     return <MapComponent location={location} points={points} />;

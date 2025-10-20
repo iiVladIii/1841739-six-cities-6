@@ -4,7 +4,7 @@ import { generateMockOffers } from '@/shared/mocks/offers';
 import { DetailedOffer, Offer, OfferCards } from '@/entities/Offer';
 import { OfferDetailed } from '@/entities/Offer';
 import { OfferReviews } from '@/widgets/OfferReviews';
-import { CityMap } from '@/widgets/CityMap';
+import { CityMap } from '@/features/city-map';
 
 const OfferPage = memo(() => {
     const [recommendedPlaces, setRecommendedPlaces] = useState<Offer[]>([]);

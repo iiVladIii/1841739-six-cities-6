@@ -1,1 +1,1 @@
-export { CityTabs } from './ui/CityTabs/CityTabs';
+export { CityPageTabs } from './ui/city-page-tabs/city-page-tabs';

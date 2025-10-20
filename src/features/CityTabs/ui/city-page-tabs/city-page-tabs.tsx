@@ -1,15 +1,28 @@
-import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { memo, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { getRouteMainPage } from '@/shared/consts/router';
 import cn from 'classnames';
-import { Cities } from '@/entities/City';
+import { CITY_NAME, cityActions, useCityName } from '@/entities/City';
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 
-interface Props {
-    city: string | null;
-}
-export const CityTabs = memo((props: Props) => {
-    const { city } = props;
-    const cities = Object.values(Cities);
+export const CityPageTabs = memo(() => {
+    const cities = Object.values(CITY_NAME);
+    const navigate = useNavigate();
+    const city = useCityName();
+    const [searchParams] = useSearchParams();
+    const { setCity } = cityActions;
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (searchParams) {
+            const cityParam = searchParams.get('city');
+            if (cityParam) dispatch(setCity(cityParam));
+        }
+    }, [searchParams, setCity]);
+
+    useEffect(() => {
+        if (!city) navigate(`${getRouteMainPage()}?city=${CITY_NAME.Paris}`);
+    }, [city, navigate]);
 
     return (
         <div className="tabs">
