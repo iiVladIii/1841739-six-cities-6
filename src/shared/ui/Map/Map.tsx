@@ -7,6 +7,7 @@ import { MAP_MARKER, URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './consts';
 import { useMap } from './useMap';
 
 export interface MapPoint extends Location {
+    targetId: string;
     marker: MAP_MARKER;
 }
 
@@ -14,6 +15,7 @@ interface Props {
     _className?: string;
     location: Location;
     points: MapPoint[];
+    onPointClick?: (point: MapPoint) => void;
 }
 
 const markers: Record<MAP_MARKER, leaflet.Icon<leaflet.IconOptions>> = {
@@ -30,10 +32,13 @@ const markers: Record<MAP_MARKER, leaflet.Icon<leaflet.IconOptions>> = {
 };
 
 export const MapComponent = memo((props: Props) => {
-    const { _className, location, points } = props;
+    const { _className, location, points, onPointClick } = props;
     const mapRef = useRef(null);
     const markersRef = useRef<
-        Map<string, { marker: leaflet.Marker; type: MAP_MARKER }>
+        Map<
+            string,
+            { marker: leaflet.Marker; type: MAP_MARKER; point: MapPoint }
+        >
     >(new Map());
     const map = useMap(mapRef, location);
 
@@ -60,8 +65,16 @@ export const MapComponent = memo((props: Props) => {
                             },
                         )
                         .addTo(map);
-
-                    currentMarkers.set(key, { marker, type: point.marker });
+                    if (onPointClick) {
+                        marker.on('click', () => {
+                            onPointClick(point);
+                        });
+                    }
+                    currentMarkers.set(key, {
+                        marker,
+                        type: point.marker,
+                        point,
+                    });
                 } else if (existingMarkerData.type !== point.marker) {
                     existingMarkerData.marker.setIcon(markers[point.marker]);
                     existingMarkerData.type = point.marker;

@@ -32,6 +32,7 @@ export const CityMap = memo((props: CityMapProps) => {
                     selectedOffer?.id === o.id
                         ? MAP_MARKER.current
                         : MAP_MARKER.default,
+                targetId: o.id,
             })) ?? [],
         [offers, selectedOffer?.id],
     );
