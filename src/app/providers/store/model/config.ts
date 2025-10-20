@@ -1,5 +1,5 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit';
-import { StateSchema } from './types';
+import { StateSchema, ThunkExtraArg } from './types';
 import { cityReducer } from '@/entities/City';
 import { offerReducer } from '@/entities/Offer';
 import { $api } from '@/shared/api/api';
@@ -21,7 +21,7 @@ export const reduxStore = configureStore({
                 extraArgument: {
                     api: $api,
                     errorHandler: apiErrorHandler,
-                },
+                } as ThunkExtraArg,
             },
         }),
 });
