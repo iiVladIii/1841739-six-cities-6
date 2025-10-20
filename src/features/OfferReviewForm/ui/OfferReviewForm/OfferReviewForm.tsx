@@ -16,13 +16,11 @@ export const OfferReviewForm = memo((props: Props) => {
         comment: '',
     });
 
-    const authData = useUserAuthData(true);
+    const authData = useUserAuthData();
     const submitHandler = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.stopPropagation();
             e.preventDefault();
-            // eslint-disable-next-line no-console
-            console.log('submitHandler', id);
             if (authData)
                 onPost?.({
                     rating: review.rating,
