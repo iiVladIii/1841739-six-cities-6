@@ -1,37 +1,31 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
-import { Offer, OfferCards } from '@/entities/Offer';
-import { generateMockOffers } from '@/shared/mocks/offers.ts';
-import { CityTabs } from '@/features/CityTabs';
-import { CityMap } from '@/widgets/CityMap';
-import { getRouteMainPage } from '@/shared/consts/router';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Cities } from '@/entities/City';
+import {
+    fetchOffersByCity,
+    Offer,
+    OfferCards,
+    useAvailableOffers,
+} from '@/entities/Offer';
+import { CityPageTabs } from '@/features/CityTabs';
+import { CityMap } from '@/features/city-map';
+import { useCityName } from '@/entities/City';
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
+import { SortSelector } from '@/features/sort-selector';
 
 const MainPage = memo(() => {
-    const [offers, setOffers] = useState<Offer[]>([]);
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
+    const offers = useAvailableOffers();
+    const dispatch = useAppDispatch();
     const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
     const selectOffer = useCallback((offer: Offer | null) => {
         setSelectedOffer(offer);
     }, []);
 
-    const selectedCity = useMemo(
-        () => searchParams.get('city'),
-        [searchParams],
-    );
+    const selectedCity = useCityName();
 
     useEffect(() => {
-        if (!selectedCity) {
-            navigate(`${getRouteMainPage()}?city=${Cities.Amsterdam}`);
-        }
-    }, [navigate, selectedCity]);
-
-    useEffect(() => {
-        setOffers(generateMockOffers());
-    }, []);
+        if (selectedCity) dispatch(fetchOffersByCity(selectedCity));
+    }, [dispatch, selectedCity]);
 
     return (
         <div className="page page--gray page--main">
@@ -40,7 +34,7 @@ const MainPage = memo(() => {
             {offers?.length === 0 ? (
                 <main className="page__main page__main--index page__main--index-empty">
                     <h1 className="visually-hidden">Cities</h1>
-                    <CityTabs city={selectedCity} />
+                    <CityPageTabs />
                     <div className="cities">
                         <div className="cities__places-container cities__places-container--empty container">
                             <section className="cities__no-places">
@@ -61,62 +55,16 @@ const MainPage = memo(() => {
             ) : (
                 <main className="page__main page__main--index">
                     <h1 className="visually-hidden">Cities</h1>
-                    <CityTabs city={selectedCity} />
+                    <CityPageTabs />
                     <div className="cities">
                         <div className="cities__places-container container">
                             <section className="cities__places places">
                                 <h2 className="visually-hidden">Places</h2>
                                 <b className="places__found">
-                                    312 places to stay in Amsterdam
+                                    {offers.length} places to stay in{' '}
+                                    {selectedCity}
                                 </b>
-                                <form
-                                    className="places__sorting"
-                                    action="#"
-                                    method="get"
-                                >
-                                    <span className="places__sorting-caption">
-                                        Sort by
-                                    </span>
-                                    <span
-                                        className="places__sorting-type"
-                                        tabIndex={0}
-                                    >
-                                        Popular
-                                        <svg
-                                            className="places__sorting-arrow"
-                                            width="7"
-                                            height="4"
-                                        >
-                                            <use xlinkHref="#icon-arrow-select"></use>
-                                        </svg>
-                                    </span>
-                                    <ul className="places__options places__options--custom places__options--opened">
-                                        <li
-                                            className="places__option places__option--active"
-                                            tabIndex={0}
-                                        >
-                                            Popular
-                                        </li>
-                                        <li
-                                            className="places__option"
-                                            tabIndex={0}
-                                        >
-                                            Price: low to high
-                                        </li>
-                                        <li
-                                            className="places__option"
-                                            tabIndex={0}
-                                        >
-                                            Price: high to low
-                                        </li>
-                                        <li
-                                            className="places__option"
-                                            tabIndex={0}
-                                        >
-                                            Top rated first
-                                        </li>
-                                    </ul>
-                                </form>
+                                <SortSelector />
                                 <div className="cities__places-list places__list tabs__content">
                                     <OfferCards
                                         offers={offers}

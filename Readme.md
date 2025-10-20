@@ -4,9 +4,6 @@
 * Наставник: [Андрей Осипук](https://htmlacademy.ru/profile/id616431).
 
 ---
-## Пропуск, все изменения в следующем pull request
-
----
 
 _Не удаляйте и не изменяйте папки и файлы:_
 _`.editorconfig`, `.gitattributes`, `.gitignore`._

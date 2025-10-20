@@ -1,4 +1,5 @@
 import { Offer } from '@/entities/Offer';
+import { CITY_NAME } from '@/entities/City';
 
 export const generateMockOffers = (): Offer[] => [
     {
@@ -7,7 +8,7 @@ export const generateMockOffers = (): Offer[] => [
         type: 'apartment',
         price: 120,
         city: {
-            name: 'Amsterdam',
+            name: CITY_NAME.Amsterdam,
             location: {
                 latitude: 52.35514938496378,
                 longitude: 4.673877537499948,
@@ -30,7 +31,7 @@ export const generateMockOffers = (): Offer[] => [
         type: 'apartment',
         price: 80,
         city: {
-            name: 'Paris',
+            name: CITY_NAME.Paris,
             location: {
                 latitude: 48.85661400000001,
                 longitude: 2.3522219000000177,
@@ -53,7 +54,7 @@ export const generateMockOffers = (): Offer[] => [
         type: 'apartment',
         price: 200,
         city: {
-            name: 'Berlin',
+            name: CITY_NAME.Brussels,
             location: {
                 latitude: 52.52000659999999,
                 longitude: 13.404953999999975,
@@ -76,7 +77,7 @@ export const generateMockOffers = (): Offer[] => [
         type: 'apartment',
         price: 150,
         city: {
-            name: 'London',
+            name: CITY_NAME.Cologne,
             location: {
                 latitude: 51.5073359,
                 longitude: -0.12775829999998223,
@@ -99,7 +100,7 @@ export const generateMockOffers = (): Offer[] => [
         type: 'apartment',
         price: 90,
         city: {
-            name: 'Barcelona',
+            name: CITY_NAME.Amsterdam,
             location: {
                 latitude: 41.38506389999999,
                 longitude: 2.1734034999999494,
