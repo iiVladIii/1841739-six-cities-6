@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { logout, useUserAuthData } from '@/entities/User';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -7,15 +7,23 @@ import {
     getRouteMainPage,
 } from '@/shared/consts/router';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
+import { fetchFavoriteOffers, useFavoriteCount } from '@/entities/Offer';
 
 export const Header = memo(() => {
-    const dipatch = useAppDispatch();
+    const dispatch = useAppDispatch();
     const authData = useUserAuthData();
     const location = useLocation();
+    const favoriteCount = useFavoriteCount();
 
     const logoutHandler = useCallback(() => {
-        dipatch(logout());
-    }, [dipatch]);
+        dispatch(logout());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (authData) {
+            dispatch(fetchFavoriteOffers());
+        }
+    }, [authData, dispatch]);
 
     return (
         <header className="header">
@@ -48,7 +56,7 @@ export const Header = memo(() => {
                                             {authData.email}
                                         </span>
                                         <span className="header__favorite-count">
-                                            3
+                                            {favoriteCount}
                                         </span>
                                     </Link>
                                 </li>

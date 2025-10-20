@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Offer } from '../../model/types/Offer';
-import { OfferCard } from '../OfferCard/OfferCard';
+import { OfferCard } from '@/entities/Offer/ui/offer-card/offer-card.tsx';
 
 interface OfferCardsProps {
     offers: Offer[];

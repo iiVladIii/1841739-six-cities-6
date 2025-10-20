@@ -1,30 +1,13 @@
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useMemo } from 'react';
 import { Header } from '@/widgets/Header';
 import { Footer } from '@/widgets/Footer';
-import { Offer, OfferCards } from '@/entities/Offer';
-import { generateMockOffers } from '@/shared/mocks/offers.ts';
+import { OfferCards } from '@/entities/Offer';
 import { Link } from 'react-router-dom';
-import { getRouteMainPage } from '@/shared/consts/router.ts';
+import { getRouteMainPage } from '@/shared/consts/router';
+import { useFavoriteOffers } from '@/entities/Offer';
 
 const FavoritesPage = memo(() => {
-    const [placesByCities, setPlacesByCities] = useState<
-        Record<string, Offer[]>
-    >({});
-    useEffect(() => {
-        setPlacesByCities(
-            generateMockOffers().reduce(
-                (acc: Record<string, Offer[]>, curr) => {
-                    if (!(curr.city.name in acc)) {
-                        acc[curr.city.name] = [];
-                    }
-                    acc[curr.city.name].push(curr);
-
-                    return acc;
-                },
-                {},
-            ),
-        );
-    }, []);
+    const placesByCities = useFavoriteOffers();
 
     const isEmpty = useMemo(() => {
         const isNoCities = Object.keys(placesByCities).length === 0;

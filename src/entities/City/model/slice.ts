@@ -2,10 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CitySchema } from './types/state';
 import { CITY_NAME } from './consts/Cities';
 
-const initialState: CitySchema = {
-    name: CITY_NAME.Paris,
-};
-
 const availableCity = (string?: string): CITY_NAME | null => {
     if (string) {
         const city = Object.values(CITY_NAME).filter(
@@ -15,6 +11,15 @@ const availableCity = (string?: string): CITY_NAME | null => {
         return null;
     }
     return null;
+};
+const urlParams = () => {
+    const city = new URLSearchParams(window.location.search).get('city');
+    if (!city) return undefined;
+    return city;
+};
+
+const initialState: CitySchema = {
+    name: availableCity(urlParams()) || CITY_NAME.Paris,
 };
 
 const citySlice = createSlice({
