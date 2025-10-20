@@ -4,7 +4,7 @@ import { fetchOffersByCity } from '../api/fetchOffersByCity.ts';
 
 const initialState: OfferSchema = {
     availableOffers: [],
-    otherOffers: [],
+    nearbyOffers: [],
     offer: null,
 };
 const offerSlice = createSlice({

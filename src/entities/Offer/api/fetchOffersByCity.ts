@@ -12,6 +12,7 @@ export const fetchOffersByCity = createAsyncThunk<
 >('offer/fetchOffersByCity', async (city, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         return generateMockOffers();
     } catch (e) {
         return rejectWithValue('ERROR');
