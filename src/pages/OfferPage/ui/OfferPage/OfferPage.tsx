@@ -20,7 +20,7 @@ const OfferPage = memo(() => {
     const dispatch = useAppDispatch();
     const recommendedPlaces = useNearbyOffers();
     const offer = useOffer();
-    const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+    const [_selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
     const navigate = useNavigate();
 
     const selectOffer = useCallback((o: Offer | null) => {
@@ -65,8 +65,8 @@ const OfferPage = memo(() => {
                 <section className="offer__map map">
                     <CityMap
                         city={offer.city.name}
-                        offers={recommendedPlaces}
-                        selectedOffer={selectedOffer}
+                        offers={[offer, ...recommendedPlaces.slice(0, 3)]}
+                        selectedOffer={offer}
                         onPointClick={(p) => {
                             scrollIntoView(`#${p}`);
                         }}
@@ -80,7 +80,7 @@ const OfferPage = memo(() => {
                         </h2>
                         <div className="near-places__list places__list">
                             <OfferCards
-                                offers={recommendedPlaces}
+                                offers={recommendedPlaces.slice(0, 3)}
                                 onActiveOffer={selectOffer}
                             />
                         </div>
