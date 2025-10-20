@@ -7,6 +7,8 @@ interface Props {
     id?: string;
 }
 
+const sortReviews = (reviews: Review[]) =>
+    reviews.sort((a, b) => (a.date > b.date ? -1 : 1));
 export const OfferReviews = memo((props: Props) => {
     const { id } = props;
 
@@ -15,12 +17,12 @@ export const OfferReviews = memo((props: Props) => {
     useEffect(() => {
         if (id)
             fetchOfferReview(id)
-                .then((data) => setReviews(data))
+                .then((data) => setReviews(sortReviews(data)))
                 .catch((e) => apiErrorHandler(e));
     }, [id]);
 
     const postReviewHandler = useCallback((review: Review) => {
-        setReviews((p) => [...p, review]);
+        setReviews((p) => [review, ...p]);
     }, []);
 
     return (
