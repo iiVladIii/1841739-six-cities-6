@@ -3,10 +3,12 @@ import { StateSchema } from './types';
 import { cityReducer } from '@/entities/City';
 import { offerReducer } from '@/entities/Offer';
 import { $api } from '@/shared/api/api';
+import { userReducer } from '@/entities/User';
 
 const reducers: ReducersMapObject<StateSchema> = {
     city: cityReducer,
     offer: offerReducer,
+    user: userReducer,
 };
 
 export const reduxStore = configureStore({
