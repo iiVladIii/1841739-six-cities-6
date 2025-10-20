@@ -2,7 +2,8 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useUserAuthData } from '@/entities/User';
 import * as React from 'react';
 import { FormRating } from '@/shared/ui';
-import { Review } from '@/entities/Review';
+import { createOfferReview, Review } from '@/entities/Review';
+import { apiErrorHandler } from '@/shared/types/api';
 
 interface Props {
     id?: string;
@@ -21,16 +22,19 @@ export const OfferReviewForm = memo((props: Props) => {
         (e: React.FormEvent<HTMLFormElement>) => {
             e.stopPropagation();
             e.preventDefault();
-            if (authData)
-                onPost?.({
+            if (id) {
+                createOfferReview({
+                    offerId: id,
                     rating: review.rating,
                     comment: review.comment,
-                    date: new Date().toISOString(),
-                    user: authData,
-                    id: `${Math.random()}`,
-                });
+                })
+                    .then((r) => {
+                        onPost?.(r);
+                    })
+                    .catch((err) => apiErrorHandler(err));
+            }
         },
-        [authData, id, onPost, review.comment, review.rating],
+        [id, onPost, review.comment, review.rating],
     );
 
     const changeHandler = useCallback(
