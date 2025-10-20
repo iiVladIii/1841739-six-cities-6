@@ -5,6 +5,7 @@ import { DetailedOffer, Offer, OfferCards } from '@/entities/Offer';
 import { OfferDetailed } from '@/entities/Offer';
 import { OfferReviews } from '@/widgets/OfferReviews';
 import { CityMap } from '@/features/city-map';
+import { scrollIntoView } from '@/shared/lib/scrollIntoView.ts';
 
 const OfferPage = memo(() => {
     const [recommendedPlaces, setRecommendedPlaces] = useState<Offer[]>([]);
@@ -64,6 +65,9 @@ const OfferPage = memo(() => {
                         city={offer.city.name}
                         offers={recommendedPlaces}
                         selectedOffer={selectedOffer}
+                        onPointClick={(p) => {
+                            scrollIntoView(`#${p}`);
+                        }}
                     />
                 </section>
 
