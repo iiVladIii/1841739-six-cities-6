@@ -1,7 +1,11 @@
 name: Build
 
 on:
-  - pull_request
+  push:
+    branches:
+      - ci-cd
+  pull_request:
+    branches: '*'
 
 jobs:
   build:

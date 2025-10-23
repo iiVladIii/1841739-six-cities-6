@@ -1,0 +1,33 @@
+name: PublishFork
+
+on:
+  workflow_run:
+    workflows:
+      - Build
+    types:
+      - completed
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'refs/heads/ci-cd' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Download build
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: actions_artifacts
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+
+      - name: Setup build for SPA routing
+        run: |
+          cp dist/index.html dist/404.html
+
+      - name: Deploy build to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          clean: true
+          git-config-name: "deploybot"
