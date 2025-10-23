@@ -1,0 +1,30 @@
+name: Debug
+
+on:
+  workflow_run:
+    workflows:
+      - Build
+    types:
+      - completed
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug all workflow_run properties
+        run: |
+          echo "=== WORKFLOW RUN DEBUG ==="
+          echo "Event: ${{ github.event.workflow_run.event }}"
+          echo "Head branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
+          echo "Status: ${{ github.event.workflow_run.status }}"
+          echo "Workflow ID: ${{ github.event.workflow_run.workflow_id }}"
+          echo "Head SHA: ${{ github.event.workflow_run.head_sha }}"
+          echo "Repository: ${{ github.event.workflow_run.repository.full_name }}"
+          echo "Actor: ${{ github.event.workflow_run.actor.login }}"
+          echo "=== GITHUB CONTEXT ==="
+          echo "Event name: ${{ github.event_name }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "=== RAW JSON ==="
+          echo '${{ toJson(github.event.workflow_run) }}'
