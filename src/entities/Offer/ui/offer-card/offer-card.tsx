@@ -4,24 +4,22 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { getRouteOfferPage } from '@/shared/consts/router';
 import cn from 'classnames';
+import { useToggleFavoriteOffer } from '../../lib/hooks/useToggleFavoriteOffer';
 
 interface Props {
     offer: Offer;
-    onFavoriteClick?: (id: string) => void;
     variant?: 'default' | 'favorite';
     onActiveOffer?: (_o: Offer | null) => void;
 }
 
 export const OfferCard = memo((props: Props) => {
-    const { offer, onFavoriteClick, variant, onActiveOffer } = props;
+    const { offer, variant, onActiveOffer } = props;
 
     const starsRating = useMemo(() => 20 * offer.rating, [offer.rating]);
 
-    const favoriteClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
-            onFavoriteClick?.(offer.id);
-        },
-        [onFavoriteClick, offer.id],
+    const toggleFavoriteHandler = useToggleFavoriteOffer(
+        offer.id,
+        offer.isFavorite,
     );
 
     const isFavoriteVariant = variant === 'favorite';
@@ -51,11 +49,11 @@ export const OfferCard = memo((props: Props) => {
         <article
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
-            className={
-                isFavoriteVariant
-                    ? 'favorites__card place-card'
-                    : 'cities__card place-card'
-            }
+            className={cn('place-card', {
+                ['favorites__card']: isFavoriteVariant,
+                ['cities__card']: !isFavoriteVariant,
+            })}
+            id={offer.id}
         >
             {offer.isPremium && (
                 <div className="place-card__mark">
@@ -84,7 +82,7 @@ export const OfferCard = memo((props: Props) => {
                         </span>
                     </div>
                     <button
-                        onClick={favoriteClickHandler}
+                        onClick={toggleFavoriteHandler}
                         className={cn('place-card__bookmark-button', 'button', {
                             'place-card__bookmark-button--active':
                                 offer.isFavorite,

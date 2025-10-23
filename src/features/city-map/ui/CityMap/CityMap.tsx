@@ -10,6 +10,7 @@ interface CityMapProps {
     city: string | null | Location;
     offers: Offer[];
     selectedOffer?: Offer | null;
+    onPointClick?: (offerId: string) => void;
 }
 
 const isLocation = (value: Location | string | null): value is Location =>
@@ -22,7 +23,7 @@ const isKnownCity = (value: string | null): value is CITY_NAME =>
     value !== null && Object.values(CITY_NAME).includes(value as CITY_NAME);
 
 export const CityMap = memo((props: CityMapProps) => {
-    const { city, offers, selectedOffer } = props;
+    const { city, offers, selectedOffer, onPointClick } = props;
 
     const points: MapPoint[] = useMemo(
         () =>
@@ -32,6 +33,7 @@ export const CityMap = memo((props: CityMapProps) => {
                     selectedOffer?.id === o.id
                         ? MAP_MARKER.current
                         : MAP_MARKER.default,
+                targetId: o.id,
             })) ?? [],
         [offers, selectedOffer?.id],
     );
@@ -42,5 +44,11 @@ export const CityMap = memo((props: CityMapProps) => {
         return CITY_LOCATIONS[CITY_NAME.Paris];
     }, [city]);
 
-    return <MapComponent location={location} points={points} />;
+    return (
+        <MapComponent
+            location={location}
+            points={points}
+            onPointClick={(p) => onPointClick?.(p.targetId)}
+        />
+    );
 });

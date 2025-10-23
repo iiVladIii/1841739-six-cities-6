@@ -19,3 +19,17 @@ export const getOffer = (state: StateSchema) => state.offer.offer;
 export function useOffer() {
     return useSelector(getOffer);
 }
+
+export const getFavoriteOffers = (state: StateSchema) =>
+    state.offer.favoriteOffers;
+
+export function useFavoriteOffers() {
+    return useSelector(getFavoriteOffers);
+}
+
+export const getFavoriteCount = (state: StateSchema) =>
+    state.offer.favoriteCount;
+
+export function useFavoriteCount() {
+    return useSelector(getFavoriteCount);
+}

@@ -1,23 +1,28 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { OfferReviewForm } from '@/features/OfferReviewForm';
-import { Review, ReviewList } from '@/entities/Review';
-import { generateMockReviews } from '@/shared/mocks/reviews';
+import { fetchOfferReview, Review, ReviewList } from '@/entities/Review';
+import { apiErrorHandler } from '@/shared/types/api';
 
 interface Props {
     id?: string;
 }
 
+const sortReviews = (reviews: Review[]) =>
+    reviews.sort((a, b) => (a.date > b.date ? -1 : 1));
 export const OfferReviews = memo((props: Props) => {
     const { id } = props;
 
     const [reviews, setReviews] = useState<Review[]>([]);
 
     useEffect(() => {
-        setReviews(generateMockReviews());
+        if (id)
+            fetchOfferReview(id)
+                .then((data) => setReviews(sortReviews(data)))
+                .catch((e) => apiErrorHandler(e));
     }, [id]);
 
     const postReviewHandler = useCallback((review: Review) => {
-        setReviews((p) => [...p, review]);
+        setReviews((p) => [review, ...p]);
     }, []);
 
     return (

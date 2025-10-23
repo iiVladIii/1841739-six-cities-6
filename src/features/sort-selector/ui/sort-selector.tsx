@@ -2,13 +2,7 @@ import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import cn from 'classnames';
 import { useOutsideClick } from '@/shared/hooks/useOutsideClick';
 import { useSearchParams } from 'react-router-dom';
-
-const SORT_OPTIONS = [
-    { label: 'Popular', value: 'popular-desc' },
-    { label: 'Price: low to high', value: 'price-asc' },
-    { label: 'Price: high to low', value: 'price-desc' },
-    { label: 'Top rated first', value: 'top-desc' },
-];
+import { OFFER_SORT_OPTIONS } from '@/entities/Offer';
 
 export const SortSelector = memo(() => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +10,10 @@ export const SortSelector = memo(() => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const selectedOption = useMemo(() => {
-        const option = SORT_OPTIONS.find(
+        const option = OFFER_SORT_OPTIONS.find(
             (o) => searchParams.get('sort-by') === o.value,
         );
-        return option || SORT_OPTIONS[0];
+        return option || OFFER_SORT_OPTIONS[0];
     }, [searchParams]);
 
     useOutsideClick(listRef, () => {
@@ -57,7 +51,7 @@ export const SortSelector = memo(() => {
                 })}
                 ref={listRef}
             >
-                {SORT_OPTIONS.map((o) => (
+                {OFFER_SORT_OPTIONS.map((o) => (
                     <li
                         onClick={() => selectHandler(o.value)}
                         key={o.value}

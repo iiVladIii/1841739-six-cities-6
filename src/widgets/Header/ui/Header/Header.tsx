@@ -1,19 +1,29 @@
-import { memo } from 'react';
-import { useUserAuthData } from '@/entities/User';
-import { Link } from 'react-router-dom';
+import { memo, useCallback, useEffect } from 'react';
+import { logout, useUserAuthData } from '@/entities/User';
+import { Link, useLocation } from 'react-router-dom';
 import {
     getRouteFavoritesPage,
+    getRouteLoginPage,
     getRouteMainPage,
 } from '@/shared/consts/router';
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
+import { fetchFavoriteOffers, useFavoriteCount } from '@/entities/Offer';
 
-interface HeaderProps {
-    className?: string;
-}
+export const Header = memo(() => {
+    const dispatch = useAppDispatch();
+    const authData = useUserAuthData();
+    const location = useLocation();
+    const favoriteCount = useFavoriteCount();
 
-export const Header = memo((props: HeaderProps) => {
-    const { className: _className } = props;
+    const logoutHandler = useCallback(() => {
+        dispatch(logout());
+    }, [dispatch]);
 
-    const authData = useUserAuthData(true);
+    useEffect(() => {
+        if (authData) {
+            dispatch(fetchFavoriteOffers());
+        }
+    }, [authData, dispatch]);
 
     return (
         <header className="header">
@@ -43,19 +53,43 @@ export const Header = memo((props: HeaderProps) => {
                                     >
                                         <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                                         <span className="header__user-name user__name">
-                                            Oliver.conner@gmail.com
+                                            {authData.email}
                                         </span>
                                         <span className="header__favorite-count">
-                                            3
+                                            {favoriteCount}
                                         </span>
                                     </Link>
                                 </li>
                                 <li className="header__nav-item">
-                                    <a className="header__nav-link" href="#">
+                                    <button
+                                        style={{
+                                            border: 'none',
+                                            padding: 0,
+                                            background: 'transparent',
+                                        }}
+                                        className="header__nav-link"
+                                        onClick={logoutHandler}
+                                    >
                                         <span className="header__signout">
                                             Sign out
                                         </span>
-                                    </a>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    )}
+                    {!authData && location.pathname !== getRouteLoginPage() && (
+                        <nav className="header__nav">
+                            <ul className="header__nav-list">
+                                <li className="header__nav-item">
+                                    <Link
+                                        to={getRouteLoginPage()}
+                                        className="header__nav-link"
+                                    >
+                                        <span className="header__signout">
+                                            Sign in
+                                        </span>
+                                    </Link>
                                 </li>
                             </ul>
                         </nav>

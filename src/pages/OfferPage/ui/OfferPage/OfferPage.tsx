@@ -1,55 +1,58 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Header } from '@/widgets/Header';
-import { generateMockOffers } from '@/shared/mocks/offers';
-import { DetailedOffer, Offer, OfferCards } from '@/entities/Offer';
+import {
+    fetchNearbyOffersByCity,
+    fetchOffer,
+    Offer,
+    OfferCards,
+    useNearbyOffers,
+    useOffer,
+} from '@/entities/Offer';
 import { OfferDetailed } from '@/entities/Offer';
 import { OfferReviews } from '@/widgets/OfferReviews';
 import { CityMap } from '@/features/city-map';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
+import { scrollIntoView } from '@/shared/lib/scrollIntoView';
 
 const OfferPage = memo(() => {
-    const [recommendedPlaces, setRecommendedPlaces] = useState<Offer[]>([]);
-    const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+    const { id } = useParams<{ id: string }>();
+    const dispatch = useAppDispatch();
+    const recommendedPlaces = useNearbyOffers();
+    const offer = useOffer();
+    const [_selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+    const navigate = useNavigate();
 
     const selectOffer = useCallback((o: Offer | null) => {
         setSelectedOffer(o);
     }, []);
 
     useEffect(() => {
-        setRecommendedPlaces(generateMockOffers());
-    }, []);
+        if (id) {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+            dispatch(fetchOffer(id)).then((d) => {
+                if (d.meta.requestStatus === 'rejected') {
+                    navigate('/404');
+                }
+            });
+        }
+    }, [dispatch, id, navigate]);
 
-    const [offer, _setOffer] = useState<DetailedOffer>({
-        ...generateMockOffers()[0],
-        description:
-            'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-        bedrooms: 3,
-        goods: [
-            'Wi-Fi',
-            'Washing machine',
-            'Towels',
-            'Heating',
-            'Coffee machine',
-            'Baby seat',
-            'Kitchen',
-            'Dishwasher',
-            'Cabel TV',
-            'Fridge',
-        ],
-        host: {
-            avatarUrl: 'img/avatar-angelina.jpg',
-            isPro: true,
-            name: 'Angelina',
-        },
-        images: [
-            'img/room.jpg',
-            'img/apartment-01.jpg',
-            'img/apartment-02.jpg',
-            'img/apartment-03.jpg',
-            'img/studio-01.jpg',
-            'img/apartment-01.jpg',
-        ],
-        maxAdults: 4,
-    });
+    useEffect(() => {
+        if (offer) {
+            dispatch(
+                fetchNearbyOffersByCity({
+                    id: offer.id,
+                    city: offer.city.name,
+                }),
+            );
+        }
+    }, [dispatch, offer]);
+
+    if (!offer) return null;
 
     return (
         <div className="page">
@@ -62,8 +65,11 @@ const OfferPage = memo(() => {
                 <section className="offer__map map">
                     <CityMap
                         city={offer.city.name}
-                        offers={recommendedPlaces}
-                        selectedOffer={selectedOffer}
+                        offers={[offer, ...recommendedPlaces.slice(0, 3)]}
+                        selectedOffer={offer}
+                        onPointClick={(p) => {
+                            scrollIntoView(`#${p}`);
+                        }}
                     />
                 </section>
 
@@ -74,7 +80,7 @@ const OfferPage = memo(() => {
                         </h2>
                         <div className="near-places__list places__list">
                             <OfferCards
-                                offers={recommendedPlaces}
+                                offers={recommendedPlaces.slice(0, 3)}
                                 onActiveOffer={selectOffer}
                             />
                         </div>

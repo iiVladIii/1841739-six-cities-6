@@ -2,7 +2,7 @@ import { City } from '@/entities/City';
 import { Location } from '@/entities/Location';
 import { User } from '@/entities/User';
 
-export type OfferType = 'apartment';
+export type OfferType = 'apartment' | 'room' | 'house' | 'hotel';
 export interface Offer {
     id: string;
     title: string;

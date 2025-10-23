@@ -11,6 +11,7 @@ import { CityMap } from '@/features/city-map';
 import { useCityName } from '@/entities/City';
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
 import { SortSelector } from '@/features/sort-selector';
+import { scrollIntoView } from '@/shared/lib/scrollIntoView';
 
 const MainPage = memo(() => {
     const offers = useAvailableOffers();
@@ -77,6 +78,9 @@ const MainPage = memo(() => {
                                     city={selectedCity}
                                     offers={offers}
                                     selectedOffer={selectedOffer}
+                                    onPointClick={(p) => {
+                                        scrollIntoView(`#${p}`);
+                                    }}
                                 />
                             </div>
                         </div>

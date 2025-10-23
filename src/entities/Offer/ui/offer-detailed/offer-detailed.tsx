@@ -1,6 +1,7 @@
 import { memo, ReactNode, useMemo } from 'react';
 import { DetailedOffer } from '../../model/types/Offer';
 import cn from 'classnames';
+import { useToggleFavoriteOffer } from '../../lib/hooks/useToggleFavoriteOffer';
 
 interface OfferDetailedProps {
     offer: DetailedOffer;
@@ -9,6 +10,10 @@ interface OfferDetailedProps {
 
 export const OfferDetailed = memo((props: OfferDetailedProps) => {
     const { offer, reviews } = props;
+    const toggleFavoriteHandler = useToggleFavoriteOffer(
+        offer.id,
+        offer.isFavorite,
+    );
 
     const starsRating = useMemo(() => 20 * offer.rating, [offer.rating]);
 
@@ -35,8 +40,9 @@ export const OfferDetailed = memo((props: OfferDetailedProps) => {
                         </div>
                     )}
                     <div className="offer__name-wrapper">
-                        <h1 className="offer__name">${offer.title}</h1>
+                        <h1 className="offer__name">{offer.title}</h1>
                         <button
+                            onClick={toggleFavoriteHandler}
                             className={cn('offer__bookmark-button button', {
                                 'offer__bookmark-button--active':
                                     offer.isFavorite,
