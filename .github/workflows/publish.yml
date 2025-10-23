@@ -21,6 +21,11 @@ jobs:
           name: actions_artifacts
           workflow: ${{ github.event.workflow_run.workflow_id }}
 
+      - name: Setup build for SPA routing
+        run: |
+          cp ./dist/index.html ./dist/404.html
+          rm ./dist/index.html
+
       - name: Get PR number
         run: |
           echo "PR=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')" >> $GITHUB_ENV
@@ -37,6 +42,7 @@ jobs:
           commit-message: "✔️ Сборка #${{ env.PR }}"
 
       - name: Comment PR
+        if: ${{ github.event.workflow_run.event == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |

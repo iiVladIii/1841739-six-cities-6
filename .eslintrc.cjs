@@ -26,6 +26,9 @@ module.exports = {
         '@typescript-eslint/no-misused-promises': 'off',
         '@typescript-eslint/no-unsafe-call': 'off',
     },
+    globals: {
+        __BASE__: true,
+    },
     overrides: [
         {
             files: ['*test*'],

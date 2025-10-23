@@ -8,9 +8,11 @@ import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig((config) => {
     const isDev = config.mode === 'development';
+    const BASE_PATH = '/1841739-six-cities-6/';
 
     return {
         plugins: [react()],
+        base: BASE_PATH,
         test: {
             globals: true,
             environment: 'jsdom',
@@ -24,6 +26,9 @@ export default defineConfig((config) => {
                     : '[hash:base64:8]',
                 exportGlobals: false,
             },
+        },
+        define: {
+            __BASE__: JSON.stringify(BASE_PATH),
         },
         resolve: {
             alias: {
