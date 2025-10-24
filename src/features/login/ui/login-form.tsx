@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useAppDispatch } from '@/shared/hooks/useAppDispatch';
-import { login } from '@/entities/User/';
-import { useAuthError } from '@/entities/User';
+import { useAppDispatch } from '@/shared/hooks/use-app-dispatch';
+import { login } from '@/entities/user/';
+import { useAuthError } from '@/entities/user';
 
 export const LoginForm = () => {
     const dispatch = useAppDispatch();
