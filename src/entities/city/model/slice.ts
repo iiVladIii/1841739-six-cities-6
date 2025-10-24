@@ -19,7 +19,7 @@ const urlParams = () => {
 };
 
 const initialState: CitySchema = {
-    name: availableCity(urlParams()) || CITY_NAME.Paris,
+    name: availableCity(urlParams()),
 };
 
 const citySlice = createSlice({

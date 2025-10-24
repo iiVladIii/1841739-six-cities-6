@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { getRouteMainPage } from '@/shared/consts/router';
 import cn from 'classnames';
 import { CITY_NAME, cityActions, useCityName } from '@/entities/city';
@@ -11,13 +11,17 @@ export const CityPageTabs = memo(() => {
     const [searchParams, setSearchParams] = useSearchParams();
     const { setCity, resetCity } = cityActions;
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (searchParams) {
             const cityParam = searchParams.get('city');
             if (cityParam) dispatch(setCity(cityParam));
+            else navigate(`${getRouteMainPage()}?city=${CITY_NAME.Paris}`);
+        } else {
+            navigate(`${getRouteMainPage()}?city=${CITY_NAME.Paris}`);
         }
-    }, [dispatch, searchParams, setCity]);
+    }, [dispatch, navigate, searchParams, setCity]);
 
     useEffect(
         () => () => {
