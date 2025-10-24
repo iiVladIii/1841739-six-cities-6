@@ -5,9 +5,11 @@ import { OfferCards } from '@/entities/offer';
 import { Link } from 'react-router-dom';
 import { getRouteMainPage } from '@/shared/consts/router';
 import { useFavoriteOffers } from '@/entities/offer';
+import { useLinkWithParams } from '@/shared/hooks/use-navigate-with-params';
 
 const FavoritesPage = memo(() => {
     const placesByCities = useFavoriteOffers();
+    const getRouteLink = useLinkWithParams();
 
     const isEmpty = useMemo(() => {
         const isNoCities = Object.keys(placesByCities).length === 0;
@@ -56,7 +58,12 @@ const FavoritesPage = memo(() => {
                                                 <div className="locations__item">
                                                     <Link
                                                         className="locations__item-link"
-                                                        to={`${getRouteMainPage()}?city=${city}`}
+                                                        to={getRouteLink(
+                                                            getRouteMainPage(),
+                                                            {
+                                                                city: city,
+                                                            },
+                                                        )}
                                                     >
                                                         <span>{city}</span>
                                                     </Link>
