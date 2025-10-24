@@ -12,7 +12,6 @@ export interface MapPoint extends Location {
 }
 
 interface Props {
-    _className?: string;
     location: Location;
     points: MapPoint[];
     onPointClick?: (point: MapPoint) => void;
@@ -32,7 +31,7 @@ const markers: Record<MAP_MARKER, leaflet.Icon<leaflet.IconOptions>> = {
 };
 
 export const MapComponent = memo((props: Props) => {
-    const { _className, location, points, onPointClick } = props;
+    const { location, points, onPointClick } = props;
     const mapRef = useRef(null);
     const markersRef = useRef<
         Map<
@@ -101,11 +100,5 @@ export const MapComponent = memo((props: Props) => {
         }
     }, [map, points]);
 
-    return (
-        <div
-            style={{ width: '100%', height: '100%' }}
-            ref={mapRef}
-            className={_className}
-        ></div>
-    );
+    return <div style={{ width: '100%', height: '100%' }} ref={mapRef}></div>;
 });
