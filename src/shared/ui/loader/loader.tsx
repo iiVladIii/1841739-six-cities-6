@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import cls from './Loader.module.css';
+import cls from './loader.module.css';
 
 interface Props {
     size?: number | string;
