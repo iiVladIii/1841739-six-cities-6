@@ -1,5 +1,5 @@
-import { Offer } from '@/entities/Offer';
-import { CITY_NAME } from '@/entities/City';
+import { Offer } from '@/entities/offer';
+import { CITY_NAME } from '@/entities/city';
 
 export const generateMockOffers = (): Offer[] => [
     {
