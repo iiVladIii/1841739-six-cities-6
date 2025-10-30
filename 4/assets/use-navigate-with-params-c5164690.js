@@ -1,1 +1,0 @@
-import{a as n,r as o}from"./index-22290db3.js";function m(){const[r]=n();return o.useCallback((s,e)=>{const a=new URLSearchParams(r);return Object.entries(e??{}).forEach(([t,c])=>{a.set(t,c)}),`${s}?${a.toString()}`},[r])}export{m as u};
