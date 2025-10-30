@@ -36,7 +36,7 @@ export const Header = memo(() => {
                         >
                             <img
                                 className="header__logo"
-                                src={`${__BASE__}/img/logo.svg`}
+                                src={`${__BASE__}img/logo.svg`}
                                 alt="6 cities logo"
                                 width="81"
                                 height="41"
