@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import cn from 'classnames';
-import { useOutsideClick } from '@/shared/hooks/useOutsideClick';
+import { useOutsideClick } from '@/shared/hooks/use-outside-click';
 import { useSearchParams } from 'react-router-dom';
-import { OFFER_SORT_OPTIONS } from '@/entities/Offer';
+import { OFFER_SORT_OPTIONS } from '@/entities/offer';
 
 export const SortSelector = memo(() => {
     const [isOpen, setIsOpen] = useState(false);

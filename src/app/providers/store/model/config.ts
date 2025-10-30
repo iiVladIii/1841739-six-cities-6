@@ -1,9 +1,9 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit';
 import { StateSchema, ThunkExtraArg } from './types';
-import { cityReducer } from '@/entities/City';
-import { offerReducer } from '@/entities/Offer';
+import { cityReducer } from '@/entities/city';
+import { offerReducer } from '@/entities/offer';
 import { $api } from '@/shared/api/api';
-import { userReducer } from '@/entities/User';
+import { userReducer } from '@/entities/user';
 import { apiErrorHandler } from '@/shared/types/api';
 
 const reducers: ReducersMapObject<StateSchema> = {

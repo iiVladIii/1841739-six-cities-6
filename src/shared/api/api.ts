@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken } from './authCookie';
+import { getAccessToken } from './auth-cookie';
 
 export const $api = axios.create({
     baseURL: 'https://14.design.htmlacademy.pro/six-cities',

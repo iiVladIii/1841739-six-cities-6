@@ -1,3 +1,3 @@
-export { Loader } from './Loader/Loader';
-export { FormRating } from './FormRating/FormRating';
-export { MapComponent } from './Map/Map';
+export { Loader } from './loader/loader';
+export { StarRating } from './star-rating/star-rating';
+export { MapComponent } from './map/map';

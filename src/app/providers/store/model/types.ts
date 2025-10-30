@@ -1,7 +1,7 @@
-import { CitySchema } from '@/entities/City';
-import { OfferSchema } from '@/entities/Offer';
+import { CitySchema } from '@/entities/city';
+import { OfferSchema } from '@/entities/offer';
 import { AxiosInstance } from 'axios';
-import { UserSchema } from '@/entities/User';
+import { UserSchema } from '@/entities/user';
 import { ServerError } from '@/shared/types/api';
 
 export interface StateSchema {
