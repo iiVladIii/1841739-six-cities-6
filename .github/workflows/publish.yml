@@ -48,3 +48,15 @@ jobs:
           message: |
             Ваш пулреквест опубликован. Посмотреть можно [здесь](https://${{ env.BUILD_URL }}/${{ env.PR }}/)
           pr_number: ${{ env.PR }}
+
+      - name: Comment CodeSandbox Link
+        if: ${{ github.event.workflow_run.event == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            ## 🏖️ CodeSandbox Preview
+
+            Открыть код в онлайн-редакторе:
+
+            [![Open in CodeSandbox](https://img.shields.io/badge/Open%20in-CodeSandbox-blue?style=for-the-badge&logo=codesandbox)](https://codesandbox.io/p/github/${{ github.repository }}/pr/${{ env.PR }})
+          pr_number: ${{ env.PR }}
