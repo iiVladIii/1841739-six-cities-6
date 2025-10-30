@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <StoreProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={__BASE__}>
             <App />
         </BrowserRouter>
     </StoreProvider>,

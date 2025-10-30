@@ -2,6 +2,7 @@
 
 * Студент: [Vladislav Filimonov](https://up.htmlacademy.ru/univer-js3/6/user/1841739).
 * Наставник: [Андрей Осипук](https://htmlacademy.ru/profile/id616431).
+* codesandbox: [click](https://codesandbox.io/p/github/iiVladIii/1841739-six-cities-6/master)
 
 ---
 
