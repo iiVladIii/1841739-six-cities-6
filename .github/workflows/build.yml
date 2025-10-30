@@ -1,9 +1,6 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches: '*'
 
@@ -21,7 +18,8 @@ jobs:
 
       - name: Build
         run: |
-          NODE_ENV=development npm install && npm run build --if-present
+          NODE_ENV=development npm install
+          PR_NUMBER=${{ github.event.number }} npm run build --if-present
           if [[ $(find . -maxdepth 1 -type d -name 'dist') == '' ]]
           then
             cp -r public dist
