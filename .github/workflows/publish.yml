@@ -24,7 +24,6 @@ jobs:
       - name: Setup build for SPA routing
         run: |
           cp ./dist/index.html ./dist/404.html
-          rm ./dist/index.html
 
       - name: Get PR number
         run: |
