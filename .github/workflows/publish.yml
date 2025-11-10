@@ -54,6 +54,9 @@ jobs:
         with:
           message: |
             ## 🏖️ CodeSandbox Preview
-            [![Open in CodeSandbox](https://img.shields.io/badge/Open%20in-CodeSandbox-blue?style=for-the-badge&logo=codesandbox)](https://codesandbox.io/p/github/${{ github.event.workflow_run.head_repository.full_name }}/${{ github.event.workflow_run.head_branch }})
+            [![Open in CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/github/${{ github.event.workflow_run.head_repository.full_name }}/${{ github.event.workflow_run.head_branch }})
+
+            ## 🎨 Chromatic Storybook
+            [![Open in Chromatic](https://img.shields.io/badge/Open%20in-Chromatic-FC521F?style=for-the-badge&logo=chromatic)](https://www.chromatic.com/library?appId=691256864dc42675fef9fc52)
           pr_number: ${{ env.PR }}
 

@@ -2,7 +2,7 @@ import { useAppDispatch } from '@/shared/hooks/use-app-dispatch';
 import { useUserAuthData } from '@/entities/user';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
-import { toggleFavoriteOffer } from '@/entities/offer';
+import { toggleFavoriteOffer } from '../../api/toggle-favorite-offer';
 import { getRouteLoginPage } from '@/shared/consts/router';
 
 export function useToggleFavoriteOffer(id: string, isFavorite: boolean) {

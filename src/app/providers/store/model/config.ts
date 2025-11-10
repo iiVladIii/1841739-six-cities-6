@@ -12,18 +12,20 @@ const reducers: ReducersMapObject<StateSchema> = {
     user: userReducer,
 };
 
-export const reduxStore = configureStore({
-    reducer: reducers,
-    devTools: true,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            thunk: {
-                extraArgument: {
-                    api: $api,
-                    errorHandler: apiErrorHandler,
-                } as ThunkExtraArg,
-            },
-        }),
-});
+export const reduxStore = (initialState?: StateSchema) =>
+    configureStore({
+        preloadedState: initialState,
+        reducer: reducers,
+        devTools: true,
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                thunk: {
+                    extraArgument: {
+                        api: $api,
+                        errorHandler: apiErrorHandler,
+                    } as ThunkExtraArg,
+                },
+            }),
+    });
 
-export type AppDispatch = (typeof reduxStore)['dispatch'];
+export type AppDispatch = ReturnType<typeof reduxStore>['dispatch'];
