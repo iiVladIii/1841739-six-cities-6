@@ -45,7 +45,7 @@
         "@vitejs/plugin-react": "^5.1.0",
         "axios-mock-adapter": "1.22.0",
         "chromatic": "^13.3.3",
-        "eslint": "8.51.0",
+        "eslint": "^8.57.0",
         "eslint-config-htmlacademy": "9.1.1",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-react-hooks": "4.6.0",
