@@ -8,7 +8,11 @@ import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig((config) => {
     const isDev = config.mode === 'development';
-    const BASE_PATH = '/1841739-six-cities-6/';
+    let BASE_PATH = '/1841739-six-cities-6/';
+
+    if (process.env.PR_NUMBER) {
+        BASE_PATH = `${BASE_PATH}${process.env.PR_NUMBER}/`;
+    }
 
     return {
         plugins: [react()],

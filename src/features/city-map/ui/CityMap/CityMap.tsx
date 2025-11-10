@@ -1,10 +1,10 @@
 import { memo, useMemo } from 'react';
 import { MapComponent } from '@/shared/ui';
-import { CITY_NAME, CITY_LOCATIONS } from '@/entities/City';
-import { Location } from '@/entities/Location';
-import { Offer } from '@/entities/Offer';
-import { MapPoint } from '@/shared/ui/Map/Map';
-import { MAP_MARKER } from '@/shared/ui/Map/consts';
+import { CITY_NAME, CITY_LOCATIONS } from '@/entities/city';
+import { Location } from '@/entities/location';
+import { Offer } from '@/entities/offer';
+import { MapPoint } from '@/shared/ui/map/map';
+import { MAP_MARKER } from '@/shared/ui/map/consts';
 
 interface CityMapProps {
     city: string | null | Location;
