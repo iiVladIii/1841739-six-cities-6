@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useOutsideClick } from './use-outside-click';
-import { createRef } from 'react';
+import type { RefObject } from 'react';
 
 describe('useOutsideClick', () => {
     let container: HTMLDivElement;
@@ -16,12 +16,11 @@ describe('useOutsideClick', () => {
     });
 
     it('should call callback when clicking outside the element', () => {
-        const ref = createRef<HTMLDivElement>();
-        const callback = vi.fn();
         const element = document.createElement('div');
         container.appendChild(element);
 
-        (ref as any).current = element;
+        const ref: RefObject<HTMLDivElement> = { current: element };
+        const callback = vi.fn();
 
         renderHook(() => useOutsideClick(ref, callback));
 
@@ -36,12 +35,11 @@ describe('useOutsideClick', () => {
     });
 
     it('should not call callback when clicking inside the element', () => {
-        const ref = createRef<HTMLDivElement>();
-        const callback = vi.fn();
         const element = document.createElement('div');
         container.appendChild(element);
 
-        (ref as any).current = element;
+        const ref: RefObject<HTMLDivElement> = { current: element };
+        const callback = vi.fn();
 
         renderHook(() => useOutsideClick(ref, callback));
 
@@ -51,7 +49,7 @@ describe('useOutsideClick', () => {
     });
 
     it('should not call callback when ref.current is null', () => {
-        const ref = createRef<HTMLDivElement>();
+        const ref: RefObject<HTMLDivElement> = { current: null };
         const callback = vi.fn();
 
         renderHook(() => useOutsideClick(ref, callback));
@@ -64,12 +62,11 @@ describe('useOutsideClick', () => {
     });
 
     it('should remove event listener on unmount', () => {
-        const ref = createRef<HTMLDivElement>();
-        const callback = vi.fn();
         const element = document.createElement('div');
         container.appendChild(element);
 
-        (ref as any).current = element;
+        const ref: RefObject<HTMLDivElement> = { current: element };
+        const callback = vi.fn();
 
         const removeEventListenerSpy = vi.spyOn(
             document,
@@ -87,13 +84,12 @@ describe('useOutsideClick', () => {
     });
 
     it('should update callback when it changes', () => {
-        const ref = createRef<HTMLDivElement>();
-        const callback1 = vi.fn();
-        const callback2 = vi.fn();
         const element = document.createElement('div');
         container.appendChild(element);
 
-        (ref as any).current = element;
+        const ref: RefObject<HTMLDivElement> = { current: element };
+        const callback1 = vi.fn();
+        const callback2 = vi.fn();
 
         const { rerender } = renderHook(({ cb }) => useOutsideClick(ref, cb), {
             initialProps: { cb: callback1 },
@@ -110,14 +106,13 @@ describe('useOutsideClick', () => {
     });
 
     it('should handle click on child element', () => {
-        const ref = createRef<HTMLDivElement>();
-        const callback = vi.fn();
         const element = document.createElement('div');
         const childElement = document.createElement('span');
         element.appendChild(childElement);
         container.appendChild(element);
 
-        (ref as any).current = element;
+        const ref: RefObject<HTMLDivElement> = { current: element };
+        const callback = vi.fn();
 
         renderHook(() => useOutsideClick(ref, callback));
 

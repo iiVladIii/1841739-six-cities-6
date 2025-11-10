@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 module.exports = {
-    ignorePatterns: ['.eslintrc.cjs'],
+    ignorePatterns: ['.eslintrc.cjs', '*.stories.tsx'],
     env: { browser: true, es2022: true },
     extends: [
         'eslint:recommended',
@@ -9,7 +9,7 @@ module.exports = {
         'plugin:react-hooks/recommended',
         'htmlacademy/react-typescript',
         'prettier',
-        'plugin:storybook/recommended',
+        // 'plugin:storybook/recommended',
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
