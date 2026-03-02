@@ -7,7 +7,7 @@ export const Footer = memo(() => (
         <Link className="footer__logo-link" to={getRouteMainPage()}>
             <img
                 className="footer__logo"
-                src={`${__BASE__}/img/logo.svg`}
+                src={`${__BASE__}img/logo.svg`}
                 alt="6 cities logo"
                 width="64"
                 height="33"
